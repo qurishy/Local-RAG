@@ -1,4 +1,6 @@
-﻿using Local_Rag_Web.Models.Request;
+﻿using Local_Rag_Web.Interfaces;
+using Local_Rag_Web.Models;
+using Local_Rag_Web.Models.Request;
 using Local_Rag_Web.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,13 +17,16 @@ namespace Local_Rag_Web.Controllers
     {
         private readonly RAGQueryService _queryService;
         private readonly ILogger<SearchController> _logger;
+        private readonly ILLMService _llmService;
 
         public SearchController(
             RAGQueryService queryService,
-            ILogger<SearchController> logger)
+            ILogger<SearchController> logger,
+            ILLMService llmService)
         {
             _queryService = queryService;
             _logger = logger;
+            _llmService=llmService;
         }
 
         /// <summary>
@@ -104,6 +109,24 @@ namespace Local_Rag_Web.Controllers
                 _logger.LogError(ex, "Error retrieving statistics");
                 return StatusCode(500, new { error = "An error occurred" });
             }
+        }
+
+
+        [HttpGet("test-llm")]
+        public async Task<IActionResult> TestLLM()
+        {
+            var request = new LLMRequest
+            {
+                Query = "What is AI?",
+                RetrievedContexts = new List<string>
+        {
+            "AI stands for Artificial Intelligence."
+        },
+                MaxTokens = 50
+            };
+
+            var result = await _llmService.GenerateResponseAsync(request);
+            return Ok(new { result.GeneratedText, result.TokensUsed });
         }
     }
 

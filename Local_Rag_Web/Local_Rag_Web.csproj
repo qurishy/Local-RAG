@@ -10,6 +10,8 @@
     <PackageReference Include="DocumentFormat.OpenXml" Version="3.3.0" />
     <PackageReference Include="itext" Version="9.3.0" />
     <PackageReference Include="iTextSharp" Version="5.5.13.4" />
+    <PackageReference Include="LLamaSharp" Version="0.25.0" />
+    <PackageReference Include="LLamaSharp.Backend.Cpu" Version="0.25.0" />
     <PackageReference Include="MathNet.Numerics" Version="6.0.0-beta2" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.9" />

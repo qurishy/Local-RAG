@@ -82,7 +82,9 @@ builder.Services.AddScoped<IVectorSearchService, VectorSearchService>();
 
 // LLM Service - Singleton for the same reason as embedding service
 // The LLM model should be loaded once and reused across all requests
-builder.Services.AddSingleton<ILLMService, LLMService>();
+builder.Services.AddSingleton<ILLMService, LLMServiceLlama>();
+
+
 
 // Report Generation Service - Scoped
 builder.Services.AddScoped<IReportGenerationService, ReportGenerationService>();
@@ -135,7 +137,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowLocalhost", builder =>
     {
-        builder.WithOrigins("http://localhost:3000", "http://localhost:5173")
+        builder.WithOrigins("http://localhost:5105", "http://localhost:5173")
                .AllowAnyMethod()
                .AllowAnyHeader()
                .AllowCredentials();
